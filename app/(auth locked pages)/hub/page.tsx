@@ -10,7 +10,7 @@ export default function Page() {
           <h1 className="font-bold text-2xl mr-auto lg:text-3xl lg:mt-[2.5rem] text-slate-900">
             UghChat
           </h1>
-          <SignOut />
+            <SignOut/>
         </div>
 
         <HubClient />
