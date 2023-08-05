@@ -1,8 +1,5 @@
-export default function Page() { 
+import CaveClient from "./cave.client";
 
-    return (
-        <div>
-            test
-        </div>
-    )
+export default function Page() {
+  return <CaveClient />;
 }
