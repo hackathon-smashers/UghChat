@@ -1,23 +1,11 @@
-body {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  padding: 0 1rem 1rem 1rem;
-  max-width: 680px;
-  margin: 0 auto;
-  background: #fff;
-  color: #333;
+html, body, main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-li,
-p {
-  line-height: 1.5rem;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  font-weight: 500;
-}
-
-hr {
-  border: 1px solid #ddd;
-}
