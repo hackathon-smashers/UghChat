@@ -23,7 +23,7 @@ export const authOptions = {
     async session({ session, user, token }) {
       if (session.user) session.user.userId = token.userId;
 
-      return { discordId: token.userId, ...session };
+      return { userId: token.userId, ...session };
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (account) token.userId = account.providerAccountId;
