@@ -4,12 +4,48 @@ import { useRouter } from "next/navigation";
 import { useTargetUser } from "../hooks/useTargetUser";
 import { useEffect } from "react";
 
+const MyTextBubble = () => {
+  return (
+    <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+      <div>
+        <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
+          <p className="text-sm">Lorem ipsum dolor sit amet.</p>
+        </div>
+        <span className="text-xs text-gray-500 leading-none">
+          2 min ago
+        </span>
+      </div>
+      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+    </div>
+  )
+}
+
+const TheirTextBubble = () => {
+  return (
+    <div className="flex w-full mt-2 space-x-3 max-w-xs">
+      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+      <div>
+        <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+          <p className="text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+            do eiusmod tempor incididunt ut labore et sd sdlfosidmfioms sdofim iosdmfio msdofmsd iofdolore magna aliqua.{" "}
+          </p>
+        </div>
+        <span className="text-xs text-gray-500 leading-none">
+          2 min ago
+        </span>
+      </div>
+    </div>
+  )
+}
+
+
 export function CaveClient() {
   const [user, setUser] = useTargetUser();
   const router = useRouter();
 
   if (typeof window === "undefined") return <></>
-  if (!user ) return <></>
+  if (!user) return <></>
 
   useEffect(() => {
     console.log("test", user)
@@ -31,9 +67,8 @@ export function CaveClient() {
             <p className="mt-auto text-2xl font-bold">{user.name}</p>
             <div className="float-right text-sm mt-[0.2rem] mb-auto">
               <span
-                className={`inline-block w-2 h-2 rounded-full ${
-                  status === "authenticated" ? "bg-green-400" : "bg-gray-300"
-                } animate-pulse mr-1`}
+                className={`inline-block w-2 h-2 rounded-full ${status === "authenticated" ? "bg-green-400" : "bg-gray-300"
+                  } animate-pulse mr-1`}
               ></span>
               {status === "authenticated" ? "Online" : "Offline"}
             </div>
@@ -46,122 +81,10 @@ export function CaveClient() {
 
         {/* Text Container */}
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          <div className="flex w-full mt-2 space-x-3 max-w-xs">
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod.
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">Lorem ipsum dolor sit amet.</p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs">
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt.
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">Lorem ipsum dolor sit amet.</p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs">
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
-                <p className="text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                </p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">Lorem ipsum dolor sit.</p>
-              </div>
-              <span className="text-xs text-gray-500 leading-none">
-                2 min ago
-              </span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
+
+
+
+
         </div>
 
         {/* Input */}

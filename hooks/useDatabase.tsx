@@ -6,5 +6,5 @@ import { useContext } from 'react';
 export const useDatabase = () => {
   const data = useContext(DatabaseContext);
 
-  return data;
+  return data as any;
 };

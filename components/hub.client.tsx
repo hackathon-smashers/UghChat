@@ -5,6 +5,8 @@ import { useTargetUser } from "../hooks/useTargetUser";
 import RightChevron from "../ui/icons/RightChevron";
 
 import { useSession } from "next-auth/react";
+import { useDatabase } from "../hooks/useDatabase";
+import { useEffect, useState } from "react";
 
 const User = ({ data, status }: any) => {
   const [_user, setTargetUser] = useTargetUser();
@@ -42,9 +44,8 @@ const User = ({ data, status }: any) => {
           </li>
           <li className="float-right">
             <span
-              className={`inline-block w-2 h-2 rounded-full ${
-                status === "authenticated" ? "bg-green-400" : "bg-gray-300"
-              } animate-pulse mr-1`}
+              className={`inline-block w-2 h-2 rounded-full ${status === "authenticated" ? "bg-green-400" : "bg-gray-300"
+                } animate-pulse mr-1`}
             ></span>
             {status === "authenticated" ? "Online" : "Offline"}
           </li>
@@ -56,12 +57,20 @@ const User = ({ data, status }: any) => {
 
 export const HubClient = () => {
   const { data, status } = useSession();
+  const { users } = useDatabase();
+  const [isLoaded, setIsLoaded] = useState(false)
 
+  useEffect(() => {
+    console.log(users)
+
+  }, [users])
+
+  if (!isLoaded) return <></>
   if (status !== "authenticated") return <></>
 
   return (
     <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(() => (
+      {users.map(() => (
         <User data={data} status={status} />
       ))}
     </div>
