@@ -4,14 +4,20 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import RightChevron from "../../../ui/icons/RightChevron";
 import { SignIn, SignOut } from "../../actions";
+import { useDatabase } from "../../../hooks/useDatabase";
+import { redirect } from "next/navigation";
 
 const User = ({ data, status }: any) => {
   const handleClick = () => {
-
-  }
+    console.log("redirecting")
+    redirect("/cave")
+  };
 
   return (
-    <div onClick={() => handleClick()} className="bg-white lg:h-[5.4rem] border-2 border-slate-300 cursor-pointer rounded-md flex flex-row lg:w-96 overflow-x-hidden">
+    <div
+      onClick={() => handleClick()}
+      className="bg-white lg:h-[5.4rem] border-2 border-slate-300 cursor-pointer rounded-md flex flex-row lg:w-96 overflow-x-hidden"
+    >
       <div className="flex flex-row m-2">
         <ul>
           <div
@@ -45,6 +51,7 @@ const User = ({ data, status }: any) => {
 
 export default function IndexPage() {
   const { data, status } = useSession();
+
   if (status !== "authenticated") return <></>;
 
   return (
