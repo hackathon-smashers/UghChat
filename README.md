@@ -1,113 +1,66 @@
-> The example repository is maintained from a [monorepo](https://github.com/nextauthjs/next-auth/tree/main/apps/example-nextjs). Pull Requests should be opened against [`nextauthjs/next-auth`](https://github.com/nextauthjs/next-auth).
+<h1 align="center">
+	<br>
+	<a height="200" href="#" target="_blank" alt="Link to application"><img src="https://i.imgur.com/jSRNkXH.jpg" alt="Random image" width="200"></a>
+	<br>
+	<br>
+	<p>UghChat</p>
+</h1>
+
+<h4 align="center">A open source tinder like application created for the <a href="#" target="_blank" alt="Link to skills me">UOA</a> Hackathon</h4>
 
 <p align="center">
-   <br/>
-   <a href="https://next-auth.js.org" target="_blank"><img width="150px" src="https://next-auth.js.org/img/logo/logo-sm.png" /></a>
-   <h3 align="center">NextAuth.js Example App</h3>
-   <p align="center">
-   Open Source. Full Stack. Own Your Data.
-   </p>
-   <p align="center" style="align: center;">
-      <a href="https://npm.im/next-auth">
-        <img alt="npm" src="https://img.shields.io/npm/v/next-auth?color=green&label=next-auth">
-      </a>
-      <a href="https://bundlephobia.com/result?p=next-auth-example">
-        <img src="https://img.shields.io/bundlephobia/minzip/next-auth?label=next-auth" alt="Bundle Size"/>
-      </a>
-      <a href="https://www.npmtrends.com/next-auth">
-        <img src="https://img.shields.io/npm/dm/next-auth?label=next-auth%20downloads" alt="Downloads" />
-      </a>
-      <a href="https://npm.im/next-auth">
-        <img src="https://img.shields.io/badge/npm-TypeScript-blue" alt="TypeScript" />
-      </a>
-   </p>
+		<img src="https://img.shields.io/badge/React%20Version-%5E17.0.1-lightgrey">
+		<img src="https://img.shields.io/github/package-json/v/hackathon-smashers/UghChat/master?label=Stable%20Version&color=blueviolet">
+		<img src="https://img.shields.io/github/package-json/v/hackathon-smashers/UghChat/next?label=Next%20Version&color=lightgrey">
+
 </p>
 
-## Overview
+<p align="center">
+		<a href="#demo">Demo</a> •
+		<a href="#how-to-use">How To Use</a> •
+		<a href="#key-features">Key Features</a> •
+		<a href="#local-instance">Local Instance</a> •
+		<a href="#license">License</a> •
+		<a href="#credits">Credits</a>
+</p>
 
-NextAuth.js is a complete open source authentication solution.
+## Demo
+https://youtu.be/TAePkx2504o
+## How To Use
 
-This is an example application that shows how `next-auth` is applied to a basic Next.js app.
+Go to  create an accout / login.
 
-The deployed version can be found at [`next-auth-example.vercel.app`](https://next-auth-example.vercel.app)
+## Local Instance
 
-### About NextAuth.js
-
-NextAuth.js is an easy to implement, full-stack (client/server) open source authentication library originally designed for [Next.js](https://nextjs.org) and [Serverless](https://vercel.com). Our goal is to [support even more frameworks](https://github.com/nextauthjs/next-auth/issues/2294) in the future.
-
-Go to [next-auth.js.org](https://next-auth.js.org) for more information and documentation.
-
-> *NextAuth.js is not officially associated with Vercel or Next.js.*
-
-## Getting Started
-
-### 1. Clone the repository and install dependencies
-
+```sh
+gh repo clone hackathon-smashers/UghChat
 ```
-git clone https://github.com/nextauthjs/next-auth-example.git
-cd next-auth-example
-npm install
+and then
 ```
-
-### 2. Configure your local environment
-
-Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
-
+yarn;
+cp .env.local.example .env
 ```
-cp .env.local.example .env.local
+then fill out the .env providing your firebase information and also the database URL (make sure to include https:// at the start)
 ```
-
-Add details for one or more providers (e.g. Google, Twitter, GitHub, Email, etc).
-
-#### Database
-
-A database is needed to persist user accounts and to support email sign in. However, you can still use NextAuth.js for authentication without a database by using OAuth for authentication. If you do not specify a database, [JSON Web Tokens](https://jwt.io/introduction) will be enabled by default.
-
-You **can** skip configuring a database and come back to it later if you want.
-
-For more information about setting up a database, please check out the following links:
-
-* Docs: [next-auth.js.org/adapters/overview](https://next-auth.js.org/adapters/overview)
-
-### 3. Configure Authentication Providers
-
-1. Review and update options in `pages/api/auth/[...nextauth].js` as needed.
-
-2. When setting up OAuth, in the developer admin page for each of your OAuth services, you should configure the callback URL to use a callback path of `{server}/api/auth/callback/{provider}`.
-
-  e.g. For Google OAuth you would use: `http://localhost:3000/api/auth/callback/google`
-
-  A list of configured providers and their callback URLs is available from the endpoint `/api/auth/providers`. You can find more information at https://next-auth.js.org/configuration/providers/oauth
-
-3. You can also choose to specify an SMTP server for passwordless sign in via email.
-
-### 4. Start the application
-
-To run your site locally, use:
-
+yarn run dev
 ```
-npm run dev
-```
-
-To run it in production mode, use:
-
-```
-npm run build
-npm run start
-```
-
-### 5. Preparing for Production
-
-Follow the [Deployment documentation](https://next-auth.js.org/deployment)
-
-## Acknowledgements
-
-<a href="https://vercel.com?utm_source=nextauthjs&utm_campaign=oss">
-<img width="170px" src="https://raw.githubusercontent.com/nextauthjs/next-auth/canary/www/static/img/powered-by-vercel.svg" alt="Powered By Vercel" />
-</a>
-<p align="left">Thanks to Vercel sponsoring this project by allowing it to be deployed for free for the entire NextAuth.js Team</p>
 
 ## License
 
-ISC
+<p> 
+<strong>The MIT License</strong><br>
 
+Copyright 2021 DateMatch
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+</p>
+
+## Credits
+
+> Github [@Supesu](https://github.com/supesu) &nbsp;&middot;&nbsp;
+> Github [@AshleyThew](https://github.com/AshleyThew)
