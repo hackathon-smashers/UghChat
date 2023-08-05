@@ -1,10 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import RightChevron from "../../../ui/icons/RightChevron";
-import { SignIn, SignOut } from "../../actions";
-import { useDatabase } from "../../../hooks/useDatabase";
+import { SignOut } from "../../actions";
 import { redirect } from "next/navigation";
 
 const User = ({ data, status }: any) => {

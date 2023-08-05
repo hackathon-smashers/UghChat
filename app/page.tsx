@@ -1,9 +1,7 @@
 "use client"
 
 import { useSession } from "next-auth/react";
-import { SignIn, SignOut } from "./actions";
-import { useEffect } from "react"
-import { useDatabase } from "../hooks/useDatabase"
+import { SignIn } from "./actions";
 import Image from "next/image"
 import { redirect } from "next/navigation";
 
