@@ -1,3 +1,5 @@
+"use client"
+
 import { TargetUserContext } from '../app/providers';
 import { useContext } from 'react';
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { DatabaseContext } from '../app/providers';
 import { useContext } from 'react';
 

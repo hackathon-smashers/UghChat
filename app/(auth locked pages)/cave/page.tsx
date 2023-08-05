@@ -1,6 +1,12 @@
-import CaveClient from "./cave.client";
+import Disablessr from "../../../components/disablessr";
+import { CaveClient } from "./cave.client";
 
 export default function Page() {
-  // @ts-expect-error
-  return <CaveClient />;
+  return (
+    <>
+      <Disablessr>
+        <CaveClient />
+      </Disablessr>
+    </>
+  );
 }
