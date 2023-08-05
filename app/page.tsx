@@ -3,12 +3,13 @@
 import { useSession } from "next-auth/react";
 import { SignIn } from "./actions";
 import Image from "next/image"
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function IndexPage() {
     const { status } = useSession()
+    const router = useRouter()
 
-    if (status == "authenticated") redirect("/hub")
+    if (status == "authenticated") router.push("/hub")
 
     return (
         <div className="flex flex-col w-full h-screen min-h-screen">

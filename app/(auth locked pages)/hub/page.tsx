@@ -3,12 +3,18 @@
 import { useSession } from "next-auth/react";
 import RightChevron from "../../../ui/icons/RightChevron";
 import { SignOut } from "../../actions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useTargetUser } from "../../../hooks/useTargetUser";
 
 const User = ({ data, status }: any) => {
-  const handleClick = () => {
-    console.log("redirecting")
-    redirect("/cave")
+  const router = useRouter();
+  const [_user, setTargetUser] = useTargetUser();
+
+  const handleClick = async () => {
+    console.log("redirecting");
+    await setTargetUser(data.user);
+
+    router.push("/cave");
   };
 
   return (
@@ -49,8 +55,6 @@ const User = ({ data, status }: any) => {
 
 export default function IndexPage() {
   const { data, status } = useSession();
-
-  if (status !== "authenticated") return <></>;
 
   return (
     <div className="min-h-full min-w-full bg-white flex flex-col space-y-2 lg:space-y-[0.8rem] lg:justify-center lg:items-center overflow-visible">

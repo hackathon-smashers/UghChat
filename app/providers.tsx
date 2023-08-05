@@ -44,12 +44,7 @@ export const TargetUserProvider = ({
   const [targetUser, setTargetUser] = useState({});
 
   return (
-    <TargetUserContext.Provider
-      value={[
-        targetUser,
-        setTargetUser,
-      ]}
-    >
+    <TargetUserContext.Provider value={[targetUser, setTargetUser]}>
       {children}
     </TargetUserContext.Provider>
   );
@@ -287,7 +282,9 @@ export default function Providers({ children }: any) {
   return (
     <>
       <SessionProvider>
-        <DatabaseProvider>{children}</DatabaseProvider>
+        <DatabaseProvider>
+          <TargetUserProvider>{children}</TargetUserProvider>
+        </DatabaseProvider>
       </SessionProvider>
     </>
   );
