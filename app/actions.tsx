@@ -4,7 +4,7 @@ import { signIn, signOut } from "next-auth/react"
 
 export function SignOut() {
   return (
-    <div className={"w-[10rem] py-auto cursor-pointer bg-slate-800 rounded-md h-[2.5rem] text-white font-bold uppercase flex"} onClick={() => signOut()}>
+    <div className={"w-[10rem] py-auto mt-[2.5rem] cursor-pointer bg-slate-800 rounded-md h-[2.5rem] text-white font-bold uppercase flex"} onClick={() => signOut()}>
       <p className="mx-auto my-auto">Sign out</p>
     </div>
   )
