@@ -44,10 +44,10 @@ const User = ({ data, status }: any) => {
           </li>
           <li className="float-right">
             <span
-              className={`inline-block w-2 h-2 rounded-full ${status === "authenticated" ? "bg-green-400" : "bg-gray-300"
+              className={`inline-block w-2 h-2 rounded-full ${status ? "bg-green-400" : "bg-gray-300"
                 } animate-pulse mr-1`}
             ></span>
-            {status === "authenticated" ? "Online" : "Offline"}
+            {status ? "Online" : "Offline"}
           </li>
         </ul>
       </div>
@@ -61,7 +61,8 @@ export const HubClient = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    console.log("testtt", users)
+    console.log("users,", data)
+
 
     if (Object.keys(users).length < 1) {
       setIsLoaded(true);
@@ -74,7 +75,7 @@ export const HubClient = () => {
   return (
     <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">
       {Object.keys(users).map((key) => (
-        <User data={users[key]} status={users[key].lastOnline} />
+        key != (data as any).userId && <User data={users[key]} status={Object.keys(users[key]).includes("connections")} />
       ))}
     </div>
   );
