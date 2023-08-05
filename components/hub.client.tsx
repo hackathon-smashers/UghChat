@@ -30,7 +30,7 @@ const User = ({ data, status }: any) => {
           <div
             className="w-16 h-16 bg-cover bg-center rounded-full"
             style={{
-              backgroundImage: `url('${data.user?.image}')`,
+              backgroundImage: `url('${data?.imageUrl}')`,
             }}
           ></div>
         </ul>
@@ -40,7 +40,7 @@ const User = ({ data, status }: any) => {
             <RightChevron />
           </li>
           <li className="text-ellipsis overflow-hidden w-[10.5em] ml-3 text-md font-bold float-left">
-            {data.user!.name}
+            {data.name}
           </li>
           <li className="float-right">
             <span
@@ -61,8 +61,11 @@ export const HubClient = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    console.log(users)
+    console.log("testtt", users)
 
+    if (Object.keys(users).length < 1) {
+      setIsLoaded(true);
+    }
   }, [users])
 
   if (!isLoaded) return <></>
@@ -70,8 +73,8 @@ export const HubClient = () => {
 
   return (
     <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">
-      {users.map(() => (
-        <User data={data} status={status} />
+      {Object.keys(users).map((key) => (
+        <User data={users[key]} status={users[key].lastOnline} />
       ))}
     </div>
   );
