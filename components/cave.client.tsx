@@ -17,7 +17,7 @@ export function CaveClient() {
 
   return (
     <div className="flex flex-col h-screen w-full">
-      <div className="flex flex-col flex-grow w-full my-3 mx-auto max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
+      <div className="flex flex-col flex-grow w-full mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
         {/* Top section */}
         <div className="flex w-full h-[6.5rem] border-b-2 bg-slate-100 border-slate-300">
           <div
