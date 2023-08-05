@@ -3,12 +3,18 @@
 import { useSession } from "next-auth/react";
 import { SignIn, SignOut } from "./actions";
 import { useEffect } from "react"
+import { useDatabase } from "../hooks/useDatabase"
 
 export default function IndexPage() {
   const { status } = useSession()
+  const [user, setUser] = useDatabase() as any;
+
 
   useEffect(() => {
     console.log(status)
+
+    console.log(user)
+    setUser(user + "a")
   }, [status])
 
   return (
