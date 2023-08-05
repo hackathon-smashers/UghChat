@@ -1,12 +1,9 @@
-import { CaveClient } from "./cave.client";
-import {DisableServerHydration} from "../../../components/DisableServerHydration";
+import { CaveClient } from "../../../components/cave.client";
 
 export default function Page() {
   return (
     <>
-      <DisableServerHydration>
-        <CaveClient />
-      </DisableServerHydration>
+      <CaveClient />
     </>
   );
 }

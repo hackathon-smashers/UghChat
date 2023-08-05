@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useTargetUser } from "../../../hooks/useTargetUser";
-import RightChevron from "../../../ui/icons/RightChevron";
+import { useTargetUser } from "../hooks/useTargetUser";
+import RightChevron from "../ui/icons/RightChevron";
 
 import { useSession } from "next-auth/react";
 
@@ -10,10 +10,11 @@ const User = ({ data, status }: any) => {
 
   const handleClick = async () => {
     console.log("redirecting");
-    await setTargetUser(data.user);
 
     window.location.href = "/cave"
   };
+
+  if (!data) return <></>
 
   return (
     <div
@@ -53,6 +54,8 @@ const User = ({ data, status }: any) => {
 
 export const HubClient = () => {
   const { data, status } = useSession();
+
+  if (status !== "authenticated") return <></>
 
   return (
     <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">

@@ -1,13 +1,17 @@
 "use client";
 
-import { useTargetUser } from "../../../hooks/useTargetUser";
+import { useRouter } from "next/navigation";
+import { useTargetUser } from "../hooks/useTargetUser";
 
 export function CaveClient() {
   const [user, setUser] = useTargetUser();
+  const router = useRouter();
+
+  if (typeof window === "undefined") return <></>
 
   if (!user.email) {
-    window.location.href = "/hub"
-  };
+    router.push("/hub");
+  }
   console.log(user);
 
   return (
@@ -33,7 +37,10 @@ export function CaveClient() {
               {status === "authenticated" ? "Online" : "Offline"}
             </div>
           </div>
-          <div onClick={() => window.location.href = "/hub"} className="flex ml-auto h-[3.5rem] w-[3.5rem] cursor-pointer bg-slate-700 my-auto mr-[1.1rem] rounded"></div>
+          <div
+            onClick={() => router.push("/hub")}
+            className="flex ml-auto h-[3.5rem] w-[3.5rem] cursor-pointer bg-slate-700 my-auto mr-[1.1rem] rounded"
+          ></div>
         </div>
 
         {/* Text Container */}
@@ -171,4 +178,3 @@ export function CaveClient() {
     </div>
   );
 }
-

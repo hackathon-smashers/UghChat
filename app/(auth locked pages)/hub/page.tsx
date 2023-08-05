@@ -1,7 +1,6 @@
 import { SignOut } from "../../actions";
 
-import { HubClient } from "./hub.client";
-import {DisableServerHydration} from "../../../components/DisableServerHydration";
+import { HubClient } from "../../../components/hub.client";
 
 export default function Page() {
   return (
@@ -14,9 +13,7 @@ export default function Page() {
           <SignOut />
         </div>
 
-        <DisableServerHydration>
-          <HubClient />
-        </DisableServerHydration>
+        <HubClient />
       </div>
     </div>
   );
