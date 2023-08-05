@@ -6,8 +6,8 @@ import RightChevron from "../../ui/icons/RightChevron";
 
 const User = ({ data, status }: any) => {
     return (
-        <div className="w-96 bg-white h-[6.4rem] border-2 border-slate-200 rounded-md flex flex-row">
-            <div className="flex flex-row m-3">
+        <div className="bg-white lg:h-[5.4rem] border-2 border-slate-300 rounded-md flex flex-row w-full lg:w-96 overflow-x-hidden">
+            <div className="flex flex-row m-2">
 
                 <ul>
                     <div
@@ -18,10 +18,12 @@ const User = ({ data, status }: any) => {
                     </div>
                 </ul>
 
-                <ul className="m-3 ml-[1.5rem] my-[0rem] my-auto overflow-x-scroll">
-                    <li className="text-md font-bold">{data.user!.name}</li>
-                    <li className="italic">of the dank meme tribe</li>
-                    <li>
+                <ul className="my-auto">
+                    <li className="ml-8 w-[20px] rounded-md h-[20px] float-right">
+                        <RightChevron />
+                    </li>
+                    <li className=" ml-3 mr-12 text-md font-bold float-left">{data.user!.name}</li>
+                    <li className="float-right ml-20">
                         <span
                             className={`inline-block w-2 h-2 rounded-full ${status === "authenticated" ? "bg-green-400" : "bg-gray-300"
                                 } animate-pulse mr-1`}
@@ -29,9 +31,6 @@ const User = ({ data, status }: any) => {
                         {status === "authenticated" ? "Online" : "Offline"}
                     </li>
                 </ul>
-                <div>
-                    <RightChevron />
-                </div>
             </div>
         </div>
 
@@ -43,10 +42,16 @@ export default function IndexPage() {
     if (status !== "authenticated") return <></>
 
     return (
-        <div className="min-h-screen bg-white flex flex-col space-y-[0.8rem] justify-center items-center">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(() => (
-                <User data={data} status={status} />
-            ))}
+        <div className="min-h-screen bg-white flex flex-col space-y-2 lg:space-y-[0.8rem] lg:justify-center lg:items-center overflow-visible">
+
+            <div className="flex ml-auto mr-auto flex-col">
+                <h1 className="font-extrabold text-4xl mr-auto lg:mt-[2rem] text-slate-900">UghChat</h1>
+                <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px]">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(() => (
+                        <User data={data} status={status} />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
