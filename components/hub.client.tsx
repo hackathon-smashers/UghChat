@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { useTargetUser } from "../hooks/useTargetUser";
 import RightChevron from "../ui/icons/RightChevron";
 
@@ -7,11 +8,12 @@ import { useSession } from "next-auth/react";
 
 const User = ({ data, status }: any) => {
   const [_user, setTargetUser] = useTargetUser();
+  const router = useRouter();
 
   const handleClick = async () => {
     console.log("redirecting");
-
-    window.location.href = "/cave"
+    setTargetUser(data.user)
+    router.push("/cave")
   };
 
   if (!data) return <></>

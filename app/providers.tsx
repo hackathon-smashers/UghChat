@@ -35,7 +35,7 @@ const config = {
 const app = getApps.length === 0 ? initializeApp(config) : getApp();
 const db = getDatabase(app);
 
-export const TargetUserContext = createContext([{}, () => {}]);
+export const TargetUserContext = createContext([{}, () => { }]);
 export const TargetUserProvider = ({
   children,
 }: {

@@ -2,17 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { useTargetUser } from "../hooks/useTargetUser";
+import { useEffect } from "react";
 
 export function CaveClient() {
   const [user, setUser] = useTargetUser();
   const router = useRouter();
 
   if (typeof window === "undefined") return <></>
+  if (!user ) return <></>
 
-  if (!user.email) {
-    router.push("/hub");
-  }
-  console.log(user);
+  useEffect(() => {
+    console.log("test", user)
+  }, [user])
 
   return (
     <div className="flex flex-col h-screen w-full">
