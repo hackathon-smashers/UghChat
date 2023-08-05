@@ -45,10 +45,10 @@ export const TargetUserProvider = ({
 
   return (
     <TargetUserContext.Provider
-      value={{
+      value={[
         targetUser,
         setTargetUser,
-      }}
+      ]}
     >
       {children}
     </TargetUserContext.Provider>
