@@ -267,7 +267,8 @@ export const DatabaseProvider = ({
 
         set(newMessageRef, {
             timestamp: serverTimestamp(),
-            message: message
+            message: message,
+            sender: senderId,
         });
     };
 
