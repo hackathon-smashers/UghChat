@@ -16,6 +16,7 @@ import {
     serverTimestamp,
     set,
     update,
+
 } from "firebase/database";
 import { getApp, getApps, initializeApp } from "firebase/app";
 
@@ -60,7 +61,6 @@ export const DatabaseProvider = ({
     const [_msgs, setMsgs] = useState({});
     const { data, status } = useSession();
     let chatRoomRef = useRef<Array<string>>([]);
-    let chatListenerSubscribed = useRef(false);
 
     // TODO: Remove after debug
     useEffect(() => {
@@ -135,7 +135,9 @@ export const DatabaseProvider = ({
         }
     }, [status]);
 
+    var chatListenerSubscribed = useRef(false);
     useEffect(() => {
+        console.log("tonasdonasoidnaosndoasndioaosnid")
         // We need the chat room processing to be done before we start listening for chats.
         // We also only need this set once. Hence the ref
 
@@ -149,10 +151,31 @@ export const DatabaseProvider = ({
                     let updated = { ...prevMsgs };
                     (updated as any)[roomId] = data.val();
 
+                    console.log("123", updated)
+
                     return updated || {};
                 });
             }
         };
+
+        const fetchInital = async () => {
+            const messageRef = ref(db, "chats/");
+            const snapshot = await get(messageRef);
+            const data = await snapshot.val()
+            const __messages = [] as any
+
+            Object.keys(data).forEach(key => {
+                const ids = key.split(ID_SEPARATOR);
+
+                if (ids.includes(data.userId))
+                    __messages.push({ [key]: data[key] })
+            })
+
+            console.log("find me", __messages)
+            setMsgs(__messages)
+        }
+
+        fetchInital()
 
         if (!chatListenerSubscribed.current) {
             const chatRef = ref(db, "chats/");
