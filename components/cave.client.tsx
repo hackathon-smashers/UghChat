@@ -49,6 +49,7 @@ export function CaveClient() {
   const [message, setMessage] = useState("");
   const router = useRouter();
   const { sendMessage, messages } = useDatabase();
+  const [status] = useState(Object.keys(user).includes("connections"));
 
   const handleSubmit = () => {
     const msgbox = document.getElementById("message-box") as any
@@ -85,17 +86,17 @@ export function CaveClient() {
             <p className="mt-auto text-2xl font-bold">{user.name}</p>
             <div className="float-right text-sm mt-[0.2rem] mb-auto">
               <span
-                className={`inline-block w-2 h-2 rounded-full ${status === "authenticated" ? "bg-green-400" : "bg-gray-300"
+                className={`inline-block w-2 h-2 rounded-full ${status ? "bg-green-400" : "bg-gray-300"
                   } animate-pulse mr-1`}
               ></span>
-              {status === "authenticated" ? "Online" : "Offline"}
+              {status ? "Online" : "Offline"}
             </div>
           </div>
           <div
             onClick={() => router.push("/hub")}
             className="flex ml-auto rotate-180 text-white h-[3.5rem] w-[3.5rem] cursor-pointer bg-slate-700 my-auto mr-[1.1rem] rounded"
           >
-            <RightChevron/>
+            <RightChevron />
           </div>
         </div>
 
@@ -118,7 +119,7 @@ export function CaveClient() {
             placeholder="Type your message…"
           />
           <div onClick={() => handleSubmit()} className="text-white flex h-[2.4rem] w-[2.7rem] m-auto ml-3 rounded cursor-pointer bg-slate-900">
-            <RightChevron/>
+            <RightChevron />
           </div>
         </div>
       </div>

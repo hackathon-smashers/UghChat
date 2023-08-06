@@ -36,6 +36,9 @@ const config = {
 const app = getApps.length === 0 ? initializeApp(config) : getApp();
 const db = getDatabase(app);
 
+export const SoundProviderContext = createContext(())
+
+
 export const TargetUserContext = createContext([{}, () => { }]);
 export const TargetUserProvider = ({
     children,
@@ -166,25 +169,6 @@ export const DatabaseProvider = ({
                 });
             }
         };
-
-        const fetchInital = async () => {
-            const messageRef = ref(db, "chats/");
-            const snapshot = await get(messageRef);
-            const data = await snapshot.val()
-            const __messages = [] as any
-
-            Object.keys(data).forEach(key => {
-                const ids = key.split(ID_SEPARATOR);
-
-                if (ids.includes(data.userId))
-                    __messages.push({ [key]: data[key] })
-            })
-
-            console.log("find me", __messages)
-            setMsgs(__messages)
-        }
-
-        fetchInital()
 
         if (!chatListenerSubscribed.current) {
             const chatRef = ref(db, "chats/");
