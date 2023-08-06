@@ -54,25 +54,37 @@ export function CaveClient() {
     return `${id1}----${id2}`
   }
 
-  const handleSubmit = () => {
-    const msgbox = document.getElementById("message-box") as any
-    msgbox.value = ""
-    sendMessage(data.userId, user.userId, message)
+  const handleSubmit = (msg?: string) => {
+    if (msg) {
+      if (msg === "") return;
+      sendMessage(data.userId, user.userId, msg)
+      var objDiv = document.getElementById("container") as any;
+      objDiv.scrollTop = objDiv.scrollHeight + 1000;
+
+      const msgbox = document.getElementById("message-box") as any
+      msgbox.value = ""
+      setMessage("")
+    } else {
+      if (message === "") return;
+
+
+      const msgbox = document.getElementById("message-box") as any
+      msgbox.value = ""
+      sendMessage(data.userId, user.userId, message)
+      setMessage("")
+      var objDiv = document.getElementById("container") as any;
+      objDiv.scrollTop = objDiv.scrollHeight + 1000;
+    }
   }
 
-  useEffect(() => {
-    console.log("targetuser", user)
-    console.log("myuser", data)
-    console.log("msgs", messages)
-  }, [messages])
-
   if (typeof window === "undefined") return <>No window</>
-  if (!user) return <>No user</>
-  if (!data) return <></>
+  if (!user.userId) {
+    router.push("/hub")
 
-  useEffect(() => {
-    console.log("test", message)
-  }, [message])
+    return <></>
+  }
+
+  if (!data) return <></>
 
   return (
     <div className="flex flex-col h-screen w-full">
@@ -105,8 +117,8 @@ export function CaveClient() {
         </div>
 
         {/* Text Container */}
-        <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-          {Object.keys(messages[getId(user.userId, data.userId)]["messages"]).map((key: any) => {
+        <div id="container" className="flex flex-col flex-grow h-0 p-4 overflow-auto">
+          {messages[getId(user.userId, data.userId)] && Object.keys(messages[getId(user.userId, data.userId)]["messages"]).map((key: any) => {
             const message = messages[getId(user.userId, data.userId)]["messages"][key];
 
             if (message.sender == data.userId) return <MyTextBubble message={message.message as any} />
@@ -124,6 +136,15 @@ export function CaveClient() {
             onBlur={(e) => {
               e.preventDefault()
               setMessage(e.target.value)
+            }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                const badSolution = document.getElementById("message-box") as any
+
+                handleSubmit(badSolution.value)
+              }
+
             }}
             id="message-box"
             placeholder="Type your message…"
