@@ -5,6 +5,7 @@ import { useTargetUser } from "../hooks/useTargetUser";
 import { useEffect, useState } from "react";
 import { useDatabase } from "../hooks/useDatabase";
 import { useSession } from "next-auth/react";
+import RightChevron from "../ui/icons/RightChevron";
 
 const MyTextBubble = () => {
   return (
@@ -50,6 +51,8 @@ export function CaveClient() {
   const { sendMessage, messages } = useDatabase();
 
   const handleSubmit = () => {
+    const msgbox = document.getElementById("message-box") as any
+    msgbox.value = ""
     sendMessage(data.userId, user.userId, message)
   }
 
@@ -90,8 +93,10 @@ export function CaveClient() {
           </div>
           <div
             onClick={() => router.push("/hub")}
-            className="flex ml-auto h-[3.5rem] w-[3.5rem] cursor-pointer bg-slate-700 my-auto mr-[1.1rem] rounded"
-          ></div>
+            className="flex ml-auto rotate-180 text-white h-[3.5rem] w-[3.5rem] cursor-pointer bg-slate-700 my-auto mr-[1.1rem] rounded"
+          >
+            <RightChevron/>
+          </div>
         </div>
 
         {/* Text Container */}
@@ -109,10 +114,11 @@ export function CaveClient() {
               e.preventDefault()
               setMessage(e.target.value)
             }}
+            id="message-box"
             placeholder="Type your message…"
           />
-          <div onClick={() => handleSubmit()} className="flex h-[2.4rem] w-[2.7rem] m-auto ml-3 rounded cursor-pointer bg-slate-900">
-            t
+          <div onClick={() => handleSubmit()} className="text-white flex h-[2.4rem] w-[2.7rem] m-auto ml-3 rounded cursor-pointer bg-slate-900">
+            <RightChevron/>
           </div>
         </div>
       </div>
