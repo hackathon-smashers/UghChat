@@ -1,24 +1,34 @@
-.smoke-effect-container {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.smoke-effect {
+.smoke-container {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  animation: riseUp linear infinite;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-@keyframes riseUp {
+.smoke-particle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 40px solid #d9d9d9;
+  opacity: 0;
+
+  /* Animation */
+  animation: smokeAnimation linear infinite;
+}
+
+@keyframes smokeAnimation {
   0% {
+    transform: translateY(0) rotate(-5deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-100px) rotate(-10deg);
     opacity: 1;
   }
   100% {
-    top: -20%;
+    transform: translateY(-200px) rotate(-15deg);
     opacity: 0;
   }
 }
