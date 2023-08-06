@@ -2,7 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useTargetUser } from "../hooks/useTargetUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDatabase } from "../hooks/useDatabase";
+import { useSession } from "next-auth/react";
 
 const MyTextBubble = () => {
   return (
@@ -42,14 +44,27 @@ const TheirTextBubble = () => {
 
 export function CaveClient() {
   const [user, setUser] = useTargetUser();
+  const { data } = useSession() as any;
+  const [message, setMessage] = useState("");
   const router = useRouter();
+  const { sendMessage, messages } = useDatabase();
 
-  if (typeof window === "undefined") return <></>
-  if (!user) return <></>
+  const handleSubmit = () => {
+    sendMessage(data.userId, user.userId, message)
+  }
 
   useEffect(() => {
-    console.log("test", user)
-  }, [user])
+    console.log("targetuser", user)
+    console.log("myuser", data)
+    console.log("msgs", messages)
+  }, [messages])
+
+  if (typeof window === "undefined") return <>No window</>
+  if (!user) return <>No user</>
+
+  useEffect(() => {
+    console.log("test", message)
+  }, [message])
 
   return (
     <div className="flex flex-col h-screen w-full">
@@ -59,7 +74,7 @@ export function CaveClient() {
           <div
             className="w-16 h-16 bg-cover bg-center rounded-full my-auto ml-[1.2rem]"
             style={{
-              backgroundImage: `url('${user?.image}')`,
+              backgroundImage: `url('${user?.imageUrl}')`,
             }}
           />
 
@@ -83,8 +98,6 @@ export function CaveClient() {
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
 
 
-
-
         </div>
 
         {/* Input */}
@@ -92,9 +105,13 @@ export function CaveClient() {
           <input
             className="flex items-center h-10 w-full rounded px-3 text-sm"
             type="text"
+            onBlur={(e) => {
+              e.preventDefault()
+              setMessage(e.target.value)
+            }}
             placeholder="Type your message…"
           />
-          <div className="flex h-[2.4rem] w-[2.7rem] m-auto ml-3 rounded cursor-pointer bg-slate-900">
+          <div onClick={() => handleSubmit()} className="flex h-[2.4rem] w-[2.7rem] m-auto ml-3 rounded cursor-pointer bg-slate-900">
             t
           </div>
         </div>

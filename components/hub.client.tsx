@@ -8,17 +8,17 @@ import { useSession } from "next-auth/react";
 import { useDatabase } from "../hooks/useDatabase";
 import { useEffect, useState } from "react";
 
-const User = ({ data, status }: any) => {
+const User = ({ data, status  }: any) => {
   const [_user, setTargetUser] = useTargetUser();
   const router = useRouter();
 
   const handleClick = async () => {
     console.log("redirecting");
-    setTargetUser(data.user)
+    setTargetUser(data)
     router.push("/cave")
   };
 
-  if (!data) return <></>
+  if (!data) return <>No data</>
 
   return (
     <div
@@ -60,22 +60,26 @@ export const HubClient = () => {
   const { users } = useDatabase();
   const [isLoaded, setIsLoaded] = useState(false)
 
+  console.log("----")
+  console.log("setIsLoaded", isLoaded)
+  console.log("users", users)
+  console.log("----")
+
   useEffect(() => {
     console.log("users,", data)
-
 
     if (Object.keys(users).length < 1) {
       setIsLoaded(true);
     }
-  }, [users])
+  }, [users, isLoaded])
 
-  if (!isLoaded) return <></>
-  if (status !== "authenticated") return <></>
+  if (!isLoaded && Object.keys(users).length < 1) return <>Not loaded</>
+  if (status !== "authenticated") return <>Not Authenticated</>
 
   return (
     <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">
       {Object.keys(users).map((key) => (
-        key != (data as any).userId && <User data={users[key]} status={Object.keys(users[key]).includes("connections")} />
+        key != (data as any).userId && <User data={{userId: key, ...users[key]}} status={Object.keys(users[key]).includes("connections")} />
       ))}
     </div>
   );
