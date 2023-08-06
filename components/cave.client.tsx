@@ -15,7 +15,7 @@ const MyTextBubble = ({ user, message, playNoise }: any) => {
   return (
     <div onClick={() => playNoise()} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
       <div>
-        <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
+        <div className="bg-slate-800 text-white p-3 rounded-l-lg cursor-pointer rounded-br-lg">
           <p className="text-sm">{message.message}</p>
         </div>
         <span className="text-xs text-gray-500 leading-none">
@@ -41,7 +41,7 @@ const TheirTextBubble = ({ user, message, playNoise }: any) => {
         }}
       ></div>
       <div>
-        <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+        <div className="bg-gray-300 cursor-pointer p-3 rounded-r-lg rounded-bl-lg">
           <p className="text-sm">
             {message.message}
           </p>
