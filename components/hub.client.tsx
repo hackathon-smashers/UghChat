@@ -36,13 +36,13 @@ const User = ({ data, status  }: any) => {
         </ul>
 
         <ul className="my-auto">
-          <li className="ml-8 w-[20px] rounded-md h-[20px] float-right">
+          <li className="ml-8 w-[20px] rounded-md h-[20px] float-right overflow-hidden">
             <RightChevron />
           </li>
           <li className="text-ellipsis overflow-hidden w-[10.5em] ml-3 text-md font-bold float-left">
             {data.name}
           </li>
-          <li className="float-right">
+          <li className="float-right overflow-hidden">
             <span
               className={`inline-block w-2 h-2 rounded-full ${status ? "bg-green-400" : "bg-gray-300"
                 } animate-pulse mr-1`}
@@ -77,7 +77,7 @@ export const HubClient = () => {
   if (status !== "authenticated") return <>Not Authenticated</>
 
   return (
-    <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-full">
+    <div className="flex flex-col lg:mt-[1.2rem] space-y-[12px] min-w-screen drop-shadow-md overflow-hidden">
       {Object.keys(users).map((key) => (
         key != (data as any).userId && <User data={{userId: key, ...users[key]}} status={Object.keys(users[key]).includes("connections")} />
       ))}
