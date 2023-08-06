@@ -7,12 +7,12 @@ import { useDatabase } from "../hooks/useDatabase";
 import { useSession } from "next-auth/react";
 import RightChevron from "../ui/icons/RightChevron";
 
-const MyTextBubble = () => {
+const MyTextBubble = ({ message }: any) => {
   return (
     <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
       <div>
         <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-          <p className="text-sm">Lorem ipsum dolor sit amet.</p>
+          <p className="text-sm">{message}</p>
         </div>
         <span className="text-xs text-gray-500 leading-none">
           2 min ago
@@ -23,15 +23,14 @@ const MyTextBubble = () => {
   )
 }
 
-const TheirTextBubble = () => {
+const TheirTextBubble = ({ message }: any) => {
   return (
     <div className="flex w-full mt-2 space-x-3 max-w-xs">
       <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
       <div>
         <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
           <p className="text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt ut labore et sd sdlfosidmfioms sdofim iosdmfio msdofmsd iofdolore magna aliqua.{" "}
+            {message}
           </p>
         </div>
         <span className="text-xs text-gray-500 leading-none">
@@ -50,6 +49,10 @@ export function CaveClient() {
   const router = useRouter();
   const { sendMessage, messages } = useDatabase();
   const [status] = useState(Object.keys(user).includes("connections"));
+  const getId = (id1: number, id2: number) => {
+    if (id1 > id2) return `${id2}----${id1}`
+    return `${id1}----${id2}`
+  }
 
   const handleSubmit = () => {
     const msgbox = document.getElementById("message-box") as any
@@ -65,6 +68,7 @@ export function CaveClient() {
 
   if (typeof window === "undefined") return <>No window</>
   if (!user) return <>No user</>
+  if (!data) return <></>
 
   useEffect(() => {
     console.log("test", message)
@@ -102,8 +106,14 @@ export function CaveClient() {
 
         {/* Text Container */}
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
+          {Object.keys(messages[getId(user.userId, data.userId)]["messages"]).map((key: any) => {
+            const message = messages[getId(user.userId, data.userId)]["messages"][key];
 
+            if (message.sender == data.userId) return <MyTextBubble message={message.message as any} />
+            if (message.sender) return <TheirTextBubble message={message.message as any} />
 
+            return <></>
+          })}
         </div>
 
         {/* Input */}
