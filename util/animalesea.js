@@ -2,7 +2,7 @@
 // (C) 2014 Josh Simmons
 // http://github.com/acedio/animalese.js
 
-var Animalese = function(letters_file, onload) {
+export default function(letters_file, onload) {
   this.Animalese = function(script, shorten, pitch) {
     function shortenWord(str) {
       if (str.length > 1) {
