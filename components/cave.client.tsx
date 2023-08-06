@@ -59,7 +59,7 @@ export function CaveClient() {
       if (msg === "") return;
       sendMessage(data.userId, user.userId, msg)
       var objDiv = document.getElementById("container") as any;
-      objDiv.scrollTop = objDiv.scrollHeight + 1000;
+      objDiv.scrollTop = 9999;
 
       const msgbox = document.getElementById("message-box") as any
       msgbox.value = ""
@@ -73,7 +73,7 @@ export function CaveClient() {
       sendMessage(data.userId, user.userId, message)
       setMessage("")
       var objDiv = document.getElementById("container") as any;
-      objDiv.scrollTop = objDiv.scrollHeight + 1000;
+      objDiv.scrollTop = 9999;
     }
   }
 
