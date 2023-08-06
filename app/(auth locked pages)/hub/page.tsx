@@ -1,9 +1,10 @@
 import { SignOut } from "../../actions";
-
+import Smoke from "../../../components/smokeeffect/SmokeEffect";
 import { HubClient } from "../../../components/hub.client";
 
 export default function Page() {
   return (
+    <div style={{ width: "auto", height: "auto", overflow: "hidden" }}>
       <div className="h-screen w-full mx-[4rem] bg-white flex flex-col space-y-2 lg:space-y-[0.8rem] justify-center items-center">
         <div className="flex mx-[4rem] flex-col flex-grow">
           <div className="flex flex-row my-[1rem]">
@@ -15,6 +16,10 @@ export default function Page() {
 
           <HubClient />
         </div>
+        
       </div>  
+      <Smoke />
+      </div>
   );
 }
+
