@@ -89,7 +89,7 @@ export const DatabaseProvider = ({
             // Set the user's presence to 'true' when they sign in
             if (currentUserData) {
 
-                _createUserIfNotExists((currentUserData as any).userId, currentUserData.name ?? "Anonymous", currentUserData.image ?? "https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg")
+                _createUserIfNotExists((currentUserData as any).userId ?? serverTimestamp(), currentUserData.name ?? "Anonymous", currentUserData.image ?? "https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg")
 
                 onValue(presenceRef, (snap) => {
                     if (snap.val() === true) {
@@ -114,27 +114,30 @@ export const DatabaseProvider = ({
                 setUsers(snapshot.val() ?? {});
             });
 
-
-
-            // Get a copy of all rooms
-            const dbRef = ref(getDatabase());
-            get(child(dbRef, `chatRooms`)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    let chatRoomData = snapshot.val()
-                    let relevantChatRooms = {}
-                    // Only add a chat room to our watch list if it pertains to the current user.
-                    for (const [roomId, participants] of Object.entries(chatRoomData)) {
-                        if (Object.values(participants as any).includes(user_id)) {
-                            (relevantChatRooms as any)[roomId] = null;
-                            
-                        }
-                    }
-
-                    chatRoomRef.current = relevantChatRooms;
+            // get chats
+            const _onChatChangeHandler = (data: any) => {
+                let roomId = data.key;
+                if (roomId && roomId.split(ID_SEPARATOR).includes(user_id)) {
+                    setMsgs((prevMsgs) => {
+                        console.log("UPDATING MSG")
+                        console.log(prevMsgs)
+                        let updated = { ...prevMsgs };
+                        (updated as any)[roomId] = data.val();
+    
+                        console.log("123", updated)
+    
+                        return updated || {};
+                    });
                 }
-            }).catch((error) => {
-            console.error(error);
-            });
+            };
+    
+            if (!chatListenerSubscribed.current) {
+                const chatRef = ref(db, "chats/");
+                console.log("ASSIGNNING LISTENERSs")
+                onChildAdded(chatRef, _onChatChangeHandler);
+                onChildChanged(chatRef, _onChatChangeHandler);
+                chatListenerSubscribed.current = true;
+            }
         } else if (status == "unauthenticated") {
             //not logged in
         } else {
@@ -144,41 +147,17 @@ export const DatabaseProvider = ({
 
     var chatListenerSubscribed = useRef(false);
     useEffect(() => {
-        console.log("tonasdonasoidnaosndoasndioaosnid")
         // We need the chat room processing to be done before we start listening for chats.
         // We also only need this set once. Hence the ref
 
         // Get copy of all messages pertaining to the current user.
         // TODO: Until we implement Firebase Auth integration into our custom auth loop, clients will have access to ALL messages!!
         // When implemented, we can set .sread/.write rules with https://firebase.google.com/docs/database/security/rules-conditions
-        const _onChatChangeHandler = (data: any) => {
-            let roomId = data.key;
-            if (roomId && Object.keys(chatRoomRef.current).includes(roomId)) {
-                setMsgs((prevMsgs) => {
-                    console.log("UPDATING MSG")
-                    console.log(prevMsgs)
-                    let updated = { ...prevMsgs };
-                    (updated as any)[roomId] = data.val();
-
-                    console.log("123", updated)
-
-                    return updated || {};
-                });
-            }
-        };
-
-        if (!chatListenerSubscribed.current) {
-            const chatRef = ref(db, "chats/");
-            console.log("ASSIGNNING LISTENERSs")
-            onChildAdded(chatRef, _onChatChangeHandler);
-            onChildChanged(chatRef, _onChatChangeHandler);
-            chatListenerSubscribed.current = true;
-        }
+        
 
         // Subscribe to listener
         const chatRoomsRef = ref(db, "chatRooms/");
         onValue(chatRoomsRef, (snapshot) => {
-            console.log("AOIHDOISAJDOIASJD")
             let chatRoomData = snapshot.val();
             if (chatRoomData) {
                 // Only add a chat room to our watch list if it pertains to the current user.
