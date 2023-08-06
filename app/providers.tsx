@@ -60,7 +60,7 @@ export const DatabaseProvider = ({
     const [_users, setUsers] = useState({});
     const [_msgs, setMsgs] = useState({});
     const { data, status } = useSession();
-    let chatRoomRef = useRef<Array<string>>([]);
+    let chatRoomRef = useRef({});
 
     // TODO: Remove after debug
     useEffect(() => {
@@ -114,19 +114,26 @@ export const DatabaseProvider = ({
                 setUsers(snapshot.val() ?? {});
             });
 
-            // Get a copy of all rooms
-            const chatRoomsRef = ref(db, "chatRooms/");
-            onValue(chatRoomsRef, (snapshot) => {
-                let chatRoomData = snapshot.val();
 
-                if (chatRoomData) {
+
+            // Get a copy of all rooms
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `chatRooms`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let chatRoomData = snapshot.val()
+                    let relevantChatRooms = {}
                     // Only add a chat room to our watch list if it pertains to the current user.
                     for (const [roomId, participants] of Object.entries(chatRoomData)) {
                         if (Object.values(participants as any).includes(user_id)) {
-                            chatRoomRef.current.push(roomId);
+                            (relevantChatRooms as any)[roomId] = null;
+                            
                         }
                     }
+
+                    chatRoomRef.current = relevantChatRooms;
                 }
+            }).catch((error) => {
+            console.error(error);
             });
         } else if (status == "unauthenticated") {
             //not logged in
@@ -143,11 +150,13 @@ export const DatabaseProvider = ({
 
         // Get copy of all messages pertaining to the current user.
         // TODO: Until we implement Firebase Auth integration into our custom auth loop, clients will have access to ALL messages!!
-        // When implemented, we can set .read/.write rules with https://firebase.google.com/docs/database/security/rules-conditions
+        // When implemented, we can set .sread/.write rules with https://firebase.google.com/docs/database/security/rules-conditions
         const _onChatChangeHandler = (data: any) => {
             let roomId = data.key;
-            if (roomId && chatRoomRef.current.includes(roomId)) {
+            if (roomId && Object.keys(chatRoomRef.current).includes(roomId)) {
                 setMsgs((prevMsgs) => {
+                    console.log("UPDATING MSG")
+                    console.log(prevMsgs)
                     let updated = { ...prevMsgs };
                     (updated as any)[roomId] = data.val();
 
@@ -179,10 +188,27 @@ export const DatabaseProvider = ({
 
         if (!chatListenerSubscribed.current) {
             const chatRef = ref(db, "chats/");
+            console.log("ASSIGNNING LISTENERSs")
             onChildAdded(chatRef, _onChatChangeHandler);
             onChildChanged(chatRef, _onChatChangeHandler);
             chatListenerSubscribed.current = true;
         }
+
+        // Subscribe to listener
+        const chatRoomsRef = ref(db, "chatRooms/");
+        onValue(chatRoomsRef, (snapshot) => {
+            console.log("AOIHDOISAJDOIASJD")
+            let chatRoomData = snapshot.val();
+            if (chatRoomData) {
+                // Only add a chat room to our watch list if it pertains to the current user.
+                for (const [roomId, participants] of Object.entries(chatRoomData)) {
+                    if (Object.values(participants as any).includes((data?.user as any)?.userId)) {
+                        (chatRoomRef as any)[roomId] = null;
+                        console.log(chatRoomRef)
+                    }
+                }
+            }
+        });
     }, [chatRoomRef]);
 
     // -- PROVIDER HELPERS --
