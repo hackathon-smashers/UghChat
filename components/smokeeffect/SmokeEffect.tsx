@@ -1,42 +1,51 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
-import './SmokeEffect.css';
+import React, { useEffect, useState } from "react";
+import "./SmokeEffect.css";
 
-const SmokeEffect = () => {
-  const [smoke, setSmoke] = useState<Array<number>>([]);
+interface SmokeParticle {
+  x: number;
+  y: number;
+  size: number;
+  animationDuration: number;
+}
+
+const Smoke: React.FC = () => {
+  const [particles, setParticles] = useState<SmokeParticle[]>([]);
 
   useEffect(() => {
-    const smokeInterval = setInterval(() => {
-      setSmoke((prevSmoke) => {
-        if (prevSmoke.length < 50) {
-          return [...prevSmoke, Math.random() * 100];
-        } else {
-          return prevSmoke.slice(1);
-        }
-      });
-    }, 100);
+    const numParticles = 500;
+    const newParticles: SmokeParticle[] = [];
 
-    return () => {
-      clearInterval(smokeInterval);
-    };
+    for (let i = 0; i < numParticles; i++) {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const size = Math.random() * 8 + 2; // Particle size between 2 and 10
+      const animationDuration = Math.random() * 5000 + 3000; // Animation duration between 3s and 8s
+
+      newParticles.push({ x, y, size, animationDuration });
+    }
+
+    setParticles(newParticles);
   }, []);
 
   return (
-    <div className="smoke-effect-container">
-      {smoke.map((top, index) => (
+    <div className="smoke-container">
+      {particles.map((particle, index) => (
         <div
           key={index}
-          className="smoke-effect"
+          className="smoke-particle"
           style={{
-            top: `${top}%`,
-            animationDuration: `${Math.random() * 2 + 1}s`,
-            animationDelay: `${Math.random() * 3}s`,
+            width: particle.size,
+            height: particle.size,
+            animationDuration: `${particle.animationDuration}ms`,
+            left: particle.x,
+            top: particle.y,
           }}
-        />
+        ></div>
       ))}
     </div>
   );
 };
 
-export default SmokeEffect;
+export default Smoke;
