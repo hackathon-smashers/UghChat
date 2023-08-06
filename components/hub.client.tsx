@@ -35,7 +35,7 @@ const User = ({ data, status  }: any) => {
           ></div>
         </ul>
           <ul className="my-auto">
-            <li className="ml-8 w-[20px] rounded-md h-[20px] float-right overflow-hidden">
+            <li className="ml-8 min-w-[20px] rounded-md min-h-[20px] float-right overflow-hidden">
               <RightChevron />
             </li>
             <li className="text-ellipsis overflow-hidden w-[10.5em] ml-3 text-md font-bold float-left">
@@ -63,14 +63,6 @@ export const HubClient = () => {
   console.log("setIsLoaded", isLoaded)
   console.log("users", users)
   console.log("----")
-
-  useEffect(() => {
-    console.log("users,", data)
-
-    if (Object.keys(users).length < 1) {
-      setIsLoaded(true);
-    }
-  }, [users, isLoaded])
 
   if (!isLoaded && Object.keys(users).length < 1) return <>Not loaded</>
   if (status !== "authenticated") return <>Not Authenticated</>
