@@ -54,12 +54,19 @@ export function CaveClient() {
     return `${id1}----${id2}`
   }
 
+  useEffect(() => {
+    var objDiv = document?.getElementById("bottomAnchor3") as any;
+      objDiv?.scrollIntoView({ behavior: 'smooth' });
+  }, [message])
+
   const handleSubmit = (msg?: string) => {
     if (msg) {
       if (msg === "") return;
       sendMessage(data.userId, user.userId, msg)
-      var objDiv = document.getElementById("container") as any;
-      objDiv.scrollTop = 9999;
+      var objDiv = document.getElementById("bottomAnchor3") as any;
+      objDiv.scrollIntoView({ behavior: 'smooth' });
+      // objDiv.scrollTop = 9999;
+      // console.log(objDiv)
 
       const msgbox = document.getElementById("message-box") as any
       msgbox.value = ""
@@ -72,8 +79,8 @@ export function CaveClient() {
       msgbox.value = ""
       sendMessage(data.userId, user.userId, message)
       setMessage("")
-      var objDiv = document.getElementById("container") as any;
-      objDiv.scrollTop = 9999;
+      var objDiv = document.getElementById("bottomAnchor3") as any;
+      objDiv.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
@@ -126,6 +133,9 @@ export function CaveClient() {
 
             return <></>
           })}
+          <div id="bottomAnchor">&nbsp;</div>
+          <div id="bottomAnchor2">&nbsp;</div>
+          <div id="bottomAnchor3">&nbsp;</div>
         </div>
 
         {/* Input */}
