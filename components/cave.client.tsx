@@ -1,5 +1,7 @@
 "use client";
 
+import { prettyDate } from "../util/pretty"
+
 import { useRouter } from "next/navigation";
 import { useTargetUser } from "../hooks/useTargetUser";
 import { useEffect, useState } from "react";
@@ -8,34 +10,44 @@ import { useSession } from "next-auth/react";
 import RightChevron from "../ui/icons/RightChevron";
 import AnimaleseConverter from "../util/animalese";
 
-const MyTextBubble = ({ message, playNoise }: any) => {
+const MyTextBubble = ({ user, message, playNoise }: any) => {
+
   return (
     <div onClick={() => playNoise()} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
       <div>
         <div className="bg-slate-800 text-white p-3 rounded-l-lg rounded-br-lg">
-          <p className="text-sm">{message}</p>
+          <p className="text-sm">{message.message}</p>
         </div>
         <span className="text-xs text-gray-500 leading-none">
-          2 min ago
+          {prettyDate(message.timestamp, "hh:mm:ss")}
         </span>
       </div>
-      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" style={{
+        backgroundImage: `url('${user?.image}')`,
+        backgroundSize: "cover",
+      }}></div>
     </div>
   )
 }
 
-const TheirTextBubble = ({ message, playNoise }: any) => {
+const TheirTextBubble = ({ user, message, playNoise }: any) => {
+  console.log("find me to", user)
   return (
     <div onClick={() => playNoise()} className="flex w-full mt-2 space-x-3 max-w-xs">
-      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+        style={{
+          backgroundImage: `url('${user?.imageUrl}')`,
+          backgroundSize: "cover",
+        }}
+      ></div>
       <div>
         <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
           <p className="text-sm">
-            {message}
+            {message.message}
           </p>
         </div>
         <span className="text-xs text-gray-500 leading-none">
-          2 min ago
+          {prettyDate(message.timestamp, "hh:mm:ss")}
         </span>
       </div>
     </div>
@@ -147,8 +159,8 @@ export function CaveClient() {
           {messages[getId(user.userId, data.userId)] && Object.keys(messages[getId(user.userId, data.userId)]["messages"]).map((key: any) => {
             const message = messages[getId(user.userId, data.userId)]["messages"][key];
 
-            if (message.sender == data.userId) return <MyTextBubble playNoise={() => handleAnimal(data.userId, message.message)} message={message.message as any} />
-            if (message.sender) return <TheirTextBubble playNoise={() => handleAnimal(user.userId, message.message)} message={message.message as any} />
+            if (message.sender == data.userId) return <MyTextBubble user={data.user} playNoise={() => handleAnimal(data.userId, message.message)} message={message as any} />
+            if (message.sender) return <TheirTextBubble user={user} playNoise={() => handleAnimal(user.userId, message.message)} message={message as any} />
 
             return <></>
           })}
