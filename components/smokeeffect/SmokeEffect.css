@@ -1,0 +1,24 @@
+.smoke-effect-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.smoke-effect {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: riseUp linear infinite;
+}
+
+@keyframes riseUp {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    top: -20%;
+    opacity: 0;
+  }
+}
